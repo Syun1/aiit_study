@@ -1,3 +1,10 @@
+'''
+大学院で作成した飲食店提案サービスの実行・制御ファイルの一部
+・フロントエンドとバックエンド間のデータの送受信処理
+・レコメンドエンジンの実行処理
+・データ形式(list、jsonなど)の変換処理
+'''
+
 from django.contrib.auth.models import User, Group
 from django.http import JsonResponse
 from rest_framework.response import Response
@@ -36,7 +43,7 @@ def shop_info(request):
         num = 10 #提案店舗数
         app = []
 
-        #レコメンドロジックの実行処理
+        #レコメンドエンジンの実行処理
         while r <= 1000:
             r += 250
             dist = recommend.distance_filter(r, req_lat, req_lng) #距離フィルタリング

@@ -1,3 +1,9 @@
+'''
+大学院で作成した飲食店提案サービスのレコメンドエンジンファイルの一部
+・距離フィルタリング：緯度経度から飲食店までの距離を計算し、基準のエリアの距離内にある店舗だけに店を絞り込む
+・内容ベースフィルタリング：ユーザ側の特徴量と飲食店の特徴量からコサイン類似度を計算し、レコメンド順位を決定する
+'''
+
 from oaiso.models import Shop_info, Label_first, Shop_label
 from django.db.models import Q
 import math
