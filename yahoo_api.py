@@ -24,7 +24,7 @@ def keyphrase(url, sentence, appid):
 
 def print_result(event):
     url = "http://jlp.yahooapis.jp/KeyphraseService/V1/extract"
-    appid = "dj0zaiZpPVFJbGhCRUFxdUVlNCZzPWNvbnN1bWVyc2VjcmV0Jng9ZTA-"
+    appid = "*********************"
     sentence = u"小池百合子 増田寛也 鳥越俊太郎 マック赤坂 桜井誠 高橋しょうご 谷山ゆうじろう 山口敏夫 山中まさあき 後藤輝樹 岸本雅吉 上杉隆 七海ひろこ 中川ちょうぞう せきくち安弘 立花孝志 宮崎孝志 今尾貞夫 望月義彦 武井直子 内藤久遠"
     result = keyphrase(url, sentence, appid)
     
