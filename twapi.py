@@ -1,6 +1,11 @@
+'''
+キーワード検索したツイートからID(id)、ユーザ名(uname)、日時(date_time)、本文(tweet)を収集し、
+データベース(MySQL)に保存するプログラム
+'''
+
 # -*- coding: utf-8 -*-
-from requests_oauthlib import OAuth1Session, OAuth1
-import pymysql
+from requests_oauthlib import OAuth1Session, OAuth1   # OAuthライブラリ
+import pymysql                                        # MySQLライブラリ
 import json
 import requests
 import urllib
@@ -9,26 +14,26 @@ import io
 import time
 import datetime
 
-### mysql connect
+# MySQLに接続
 conn = pymysql.connect(
     host = 'localhost',
     user = 'root',
-    password = 'ohno_syun0323',
-    db = 'twitter',
+    password = '******',  # MySQLパスワード
+    db = 'twitter',       # DB_name
     charset = 'utf8',
     cursorclass = pymysql.cursors.DictCursor)
 cur = conn.cursor()
 
-#検索文字列設定
+# Twitterのキーワード検索
 word = input('キーワード入力： ')
 # デフォルト文字コードをutf8に変更
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-#apiキー情報設定
-consumer_key = "4aJ7Kcldz4fVVtEGAWqno6jxB"
-consumer_key_secret = "qWwIuMcQcHCHdaCKuwxpS3Vk9cly0rzmh3mTzwCiZUFpv00E7s"
-access_token = "777893838-eQVWmZ06BXR2PCZZcrfmXSLEzq1WXRhZ7WzkUwqQ"
-access_token_secret = "JWD2Uz485iK8avUrJjiRbckJbaoL699Pp5b8suipfpKGc"
+# twitter APIキー情報設定
+consumer_key = "**********************"
+consumer_key_secret = "**********************"
+access_token = "**********************"
+access_token_secret = "**********************"
 
 #twitterAPIアクセス
 url = "https://api.twitter.com/1.1/search/tweets.json?count=100&lang=ja&q=" + word
@@ -50,11 +55,12 @@ while True:
         rep_text = text.replace('\n', '')
         text_cp = (rep_text.encode("cp932", "ignore")).decode("cp932")
 
-        #DBに保存
-        cur.execute("INSERT IGNORE INTO twapi_test (id, date_time, uname, tweet) VALUES (%s, %s, %s, %s)", (tweet_id, tweet_date, uname_cp, text_cp))
+        # DBに格納
+        cur.execute("INSERT IGNORE INTO table_name (id, date_time, uname, tweet) VALUES (%s, %s, %s, %s)", (tweet_id, tweet_date, uname_cp, text_cp))
         conn.commit()
-        cnt += 1
-        maxid = tweet_id - 1
+        
+        cnt += 1              # ツイート数のカウント
+        maxid = tweet_id - 1  # tweet_idの更新
 
     if len(data) == 0:
         break
@@ -66,4 +72,4 @@ while True:
 cur.close()
 conn.close()
 
-print("ツイート数:" + str(cnt))
+print("取得ツイート数:" + str(cnt))  # 取得ツイート数の表示
